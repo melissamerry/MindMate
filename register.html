@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindMate | Join 🌱</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js">
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; font-family: 'Poppins', sans-serif;}
+  body { 
+    display:flex; justify-content:center; align-items:center; min-height:100vh; 
+    background: linear-gradient(135deg,#eaf3ff,#ffffff); overflow-x:hidden;
+  }
+  .container { 
+    background:#fff; border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.1); 
+    width:340px; padding:25px 30px; position:relative; animation:fadeIn 0.8s ease-in-out;
+  }
+  /* Lottie Animation */
+  #student-animation { 
+    width:120px; height:120px; margin:0 auto; margin-bottom:15px;
+  }
+
+  h2 { text-align:center; color:#2c3e50; font-weight:600; margin-bottom:18px; font-size:20px; }
+
+  label { font-weight:600; display:block; margin-top:10px; color:#333; font-size:14px; }
+  input, select { width:100%; padding:10px; margin-top:6px; border:1px solid #ccc; border-radius:10px; font-size:14px; transition: all 0.3s ease;}
+  input:focus, select:focus { border-color:#4a90e2; box-shadow:0 0 6px rgba(74,144,226,0.25); outline:none; }
+
+  .radio-group { margin-top:10px; }
+  .radio-options { display:flex; gap:10px; margin-top:6px; }
+  .radio-card { flex:1; border:1.5px solid #ccc; border-radius:10px; padding:10px 0; text-align:center; font-size:13px; cursor:pointer; transition: all 0.3s ease; user-select:none; }
+  .radio-card input { display:none; }
+  .radio-card.active { border-color:#4a90e2; background:#4a90e2; color:#fff; font-weight:600; box-shadow:0 0 6px rgba(74,144,226,0.25); }
+
+  button { margin-top:18px; width:100%; padding:10px; background-color:#4a90e2; color:#fff; border:none; border-radius:10px; font-weight:600; font-size:15px; cursor:not-allowed; opacity:0.7; transition:all 0.3s ease;}
+  button.enabled { cursor:pointer; opacity:1; }
+  button.enabled:hover { background-color:#3f7fd6; transform:translateY(-1px); }
+
+  small { display:block; text-align:center; color:#999; font-size:12px; margin-top:12px; }
+  .hidden-note { color:#888; font-size:11px; font-style:italic; }
+  #other-path-container { margin-top:6px; display:none; }
+
+  @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div id="student-animation"></div>
+  <form action="https://formsubmit.co/mindmateonline@gmail.com" id="registerForm" method="POST">
+    <h2>Join MindMate 🌱</h2>
+
+    <label for="name">Full Name</label>
+    <input type="text" name="name" id="name" placeholder="Enter your name" required>
+
+    <label for="email">Email Address</label>
+    <input type="email" name="email" id="email" placeholder="Enter your email" required>
+
+    <label for="grade">Grade</label>
+    <input type="text" name="grade" id="grade" placeholder="e.g., Grade 11" required>
+
+    <label for="path">Choose Your Path</label>
+    <select name="path" id="path" required>
+      <option value="">Select a Path</option>
+      <option value="Natural Science">🌿 Natural Science</option>
+      <option value="SAT">🎯 SAT Path</option>
+      <option value="Tech Builder">💻 Tech Builder</option>
+      <option value="Health Applicant">❤️ Health Applicant</option>
+      <option value="Other">➕ Other</option>
+    </select>
+    <div id="other-path-container">
+      <input type="text" id="other-path" name="other-path" placeholder="Specify your path">
+    </div>
+
+    <div class="radio-group">
+      <label>Package Type</label>
+      <div class="radio-options">
+        <label class="radio-card"><input type="radio" name="package" value="Weekly" required> Weekly</label>
+        <label class="radio-card"><input type="radio" name="package" value="Monthly" required> Monthly</label>
+        <label class="radio-card"><input type="radio" name="package" value="Monthly" required> Premium</label>
+      </div>
+    </div>
+
+    <label for="status">Current Academic Status <span class="hidden-note">(Private – only tutor can see)</span></label>
+    <select name="status" id="status" required>
+      <option value="">Select your status</option>
+      <option value="Above Average">Above Average</option>
+      <option value="Average">Average</option>
+      <option value="Below Average">Below Average</option>
+    </select>
+
+    <button type="submit" id="submitBtn">Submit</button>
+    <small>Your details are safe with MindMate 🌱</small>
+
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="thankyou.html">
+  </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+<script>
+  // Load Lottie student animation
+  const animContainer = document.getElementById('student-animation');
+  lottie.loadAnimation({
+    container: animContainer,
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: 'https://assets6.lottiefiles.com/packages/lf20_49rdyysj.json' // student studying animation
+  });
+
+  // Path "Other" input toggle
+  const pathSelect = document.getElementById('path');
+  const otherContainer = document.getElementById('other-path-container');
+  const otherInput = document.getElementById('other-path');
+
+  pathSelect.addEventListener('change', () => {
+    if(pathSelect.value === "Other") {
+      otherContainer.style.display = "block";
+      otherInput.required = true;
+    } else {
+      otherContainer.style.display = "none";
+      otherInput.required = false;
+    }
+    checkForm();
+  });
+
+  // Radio card toggle
+  const cards = document.querySelectorAll('.radio-card');
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      cards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      card.querySelector('input').checked = true;
+      checkForm();
+    });
+  });
+
+  // Form validation to enable submit
+  const form = document.getElementById('registerForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const inputs = form.querySelectorAll('input[required], select[required]');
+
+  inputs.forEach(input => {
+    input.addEventListener('input', checkForm);
+    input.addEventListener('change', checkForm);
+  });
+
+  function checkForm() {
+    let allFilled = true;
+    inputs.forEach(input => {
+      if(!input.value.trim()) allFilled = false;
+    });
+    if(allFilled) {
+      submitBtn.classList.add('enabled');
+      submitBtn.disabled = false;
+      submitBtn.style.cursor = 'pointer';
+    } else {
+      submitBtn.classList.remove('enabled');
+      submitBtn.disabled = true;
+      submitBtn.style.cursor = 'not-allowed';
+    }
+  }
+
+  checkForm();
+</script>
+</body>
+
+</html>

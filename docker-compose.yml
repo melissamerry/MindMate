@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    ports:
+      - '5000:5000'
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mindmate
+      - JWT_SECRET=change_this
+      - STRIPE_SECRET_KEY=sk_test_replace
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:6
+    restart: unless-stopped
+    volumes:
+      - mindmate-data:/data/db
+volumes:
+  mindmate-data:
